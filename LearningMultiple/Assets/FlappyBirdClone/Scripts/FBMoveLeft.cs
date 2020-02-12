@@ -9,14 +9,15 @@ public class FBMoveLeft : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+        if (FBGameManager.IsRunning)
+            transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("ObstacleTrigger"))
         {
-            // TODO: Deactivate/return to stack/remove
+            Destroy(gameObject);
         }
     }
 }
