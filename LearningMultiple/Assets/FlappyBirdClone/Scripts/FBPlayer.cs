@@ -29,9 +29,11 @@ public class FBPlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (FBGameManager.gameState != GameState.Running) return;
+
         if (collision.CompareTag("Obstacle"))
         {
-            FBGameManager.gameState = GameState.Stopped;
+            FBGameManager.gameState = GameState.Ending;
         }
         if (collision.CompareTag("Scorer"))
         {
@@ -41,19 +43,11 @@ public class FBPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (FBGameManager.gameState != GameState.Running) return;
+
         if (collision.collider.CompareTag("Ground"))
         {
-            FBGameManager.gameState = GameState.Stopped;
-            // TODO: Animation Game Over screen
-
-            StartCoroutine(RestartGame());
+            FBGameManager.gameState = GameState.Ending;
         }
-    }
-
-    private IEnumerator RestartGame()
-    {
-        // TODO remove this method; use button action for restart
-        yield return new WaitForSeconds(2f);
-        FBGameManager.Reset();
     }
 }
